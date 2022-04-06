@@ -36,3 +36,4 @@ const eduRecord= mongoose.model('education_record',{        //education record s
         default: Date.now,
     }
 })
+module.exports=eduRecord
