@@ -16,6 +16,10 @@ router.post('/users', async (req,res)=>{            //user creation endpoint
         res.status(400).send(error)
     }
 })
+
+
+module.exports=router
+
 /*
 router.delete('/users/me',async(req,res)=>{          //user deletion endpoint 
 
@@ -37,4 +41,3 @@ router.delete('/users/me',async(req,res)=>{          //user deletion endpoint
 })
 
 */
-module.exports=router

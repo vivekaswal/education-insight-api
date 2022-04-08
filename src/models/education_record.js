@@ -24,7 +24,7 @@ const eduRecord= mongoose.model('education_record',{        //education record s
         requied: true,
     },  
     passing_year: {
-        type: Number,
+        type: Date,
         requied: true,
     },   
     dob: {
@@ -36,4 +36,27 @@ const eduRecord= mongoose.model('education_record',{        //education record s
         default: Date.now,
     }
 })
+
 module.exports=eduRecord
+/*
+console.log("creating edu record")
+const er= new eduRecord(
+    {
+        name:"sarthak",
+        email:'sat@gmail.c',
+        state_id:2,
+        city_id:3,
+        higherstudy_id:2,
+        passing_year:'1997-12-12',
+        dob:'1997-02-03'
+
+    }
+)
+
+er.save().then(()=>{
+console.log("result",er)
+}).catch((error)=>{
+    console.log("error",error)
+})
+*/
+

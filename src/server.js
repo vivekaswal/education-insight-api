@@ -1,6 +1,6 @@
 require('./database/dbConnection')
 const express=require('express')
-
+const eduRouter=require('./routers/education_record')
 const userRouter=require('./routers/user')
 
 
@@ -10,6 +10,7 @@ app.use(express.json()) // convert request body to json
 const port=process.env.PORT
 
 app.use(userRouter)
+app.use(eduRouter)
 
 
 
