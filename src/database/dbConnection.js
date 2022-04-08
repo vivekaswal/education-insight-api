@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
-//const uri="mongodb+srv://education_insight:Educationinsight@cluster0.5evzv.mongodb.net/education_insight?retryWrites=true&w=majority"
-mongoose.connect(process.env.MONGODB_URL,{
+const uri="mongodb+srv://education_insight:Educationinsight@cluster0.5evzv.mongodb.net/education_insight?retryWrites=true&w=majority"
+mongoose.connect(uri,{
     
     useNewUrlParser:true,
     useUnifiedTopology:true,
