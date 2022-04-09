@@ -16,18 +16,17 @@ router.post('/users', async (req,res)=>{            //user creation endpoint
         res.status(400).send(error)
     }
 })
-/*
-router.delete('/users/me',async(req,res)=>{          //user deletion endpoint 
 
+
+router.delete('/users/:id',async(req,res)=>{          //user deletion endpoint 
+   const user_id=req.params.id
     try{
-        //  const user=await User.findByIdAndDelete(req.user._id)
-
-        //  if(!user)
-        //  {
-        //      return res.status(404).send()
-        //  }
-        //  res.send(user)
-       await req.user.remove()
+         const user=await User.findByIdAndDelete(user_id)
+         console.log(user)
+          if(!user)    // if user is not in db
+          {
+              return res.status(404).send("user not found")
+          }
         res.send("Deleted")
     }
     catch(e)
@@ -36,5 +35,8 @@ router.delete('/users/me',async(req,res)=>{          //user deletion endpoint
     }
 })
 
-*/
+
 module.exports=router
+
+
+

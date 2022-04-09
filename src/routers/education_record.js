@@ -1,15 +1,15 @@
 const express=require('express')
 const eduRecord = require('../models/education_record')
-const eduRecord=require('../models/education_record')
 const router= new express.Router()
 
-router.post('/education_record', async (req,res)=>{            //user creation endpoint  
+router.post('/educationrecord', async (req,res)=>{            //education record  creation endpoint  
   
-    const eduRecord=new eduRecord(req.body)
+
+    const eduRec=new eduRecord(req.body)
    // console.log(req.body)
     try
         {
-         await user.save()
+         await eduRec.save()
          res.status(201).send("success")
         }
     catch (error)
@@ -17,3 +17,5 @@ router.post('/education_record', async (req,res)=>{            //user creation e
         res.status(400).send(error)
     }
 })
+
+module.exports=router
