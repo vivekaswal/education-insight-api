@@ -13,7 +13,9 @@
   "dependencies": {
     "express": "^4.17.3",
     "mongodb": "^4.5.0",
-    "mongoose": "^6.2.10"
+    "mongoose": "^6.2.10",
+    "password-validator": "^5.2.1",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",

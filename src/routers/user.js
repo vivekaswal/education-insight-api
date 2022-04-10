@@ -9,11 +9,42 @@ router.post('/users', async (req,res)=>{            //user creation endpoint
     try
         {
          await user.save()
-         res.status(201).send("success")
+         
+         const responseMessage={
+             "code":200,
+             "status":"success",
+             "data":[
+                 {
+                     "key":user._id
+                 }
+             ]
+         }
+         
+         res.status(201).send(responseMessage)
         }
     catch (error)
     {
-        res.status(400).send(error)
+       // console.log(error)
+       
+        var err
+        if(error.keyValue)
+        {
+            err="email already exist"
+        }
+        else if(error.errors && error.errors.password)
+        {
+          err="Invalid Password"
+        }
+        else if(error.errors && error.errors.email)
+        {
+            err="Invalid Email"
+        }
+        const errorResponse={
+            "error_code":400,
+            "status":"fail",
+            "error_massage":err
+        }
+        res.status(400).send(errorResponse)
     }
 })
 
