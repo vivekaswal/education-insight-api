@@ -29,20 +29,20 @@ router.post('/users', async (req,res)=>{            //user creation endpoint
         var err
         if(error.keyValue)
         {
-            err="user exist"
+            err="email already exist"
         }
         else if(error.errors && error.errors.password)
         {
-          err=error.errors.password.message
+          err="Invalid Password"
         }
         else if(error.errors && error.errors.email)
         {
-            err=error.errors.email.message
+            err="Invalid Email"
         }
         const errorResponse={
             "error_code":400,
             "status":"fail",
-            "error_masseage":err
+            "error_massage":err
         }
         res.status(400).send(errorResponse)
     }
