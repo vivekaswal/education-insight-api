@@ -22,7 +22,7 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
     const rec_id=req.params.id
      try{
           const eduRec=await eduRecord.findByIdAndDelete(rec_id)
-          //console.log(eduRec)
+          console.log(eduRec)
            if(!eduRec)    // if user is not in db
            {
                return res.status(404).send("user not found")
