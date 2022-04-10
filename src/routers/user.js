@@ -29,7 +29,7 @@ router.post('/users', async (req,res)=>{            //user creation endpoint
         var err
         if(error.keyValue)
         {
-            err="user exist"
+            err="email already exist"
         }
         else if(error.errors && error.errors.password)
         {
