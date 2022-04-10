@@ -2,7 +2,7 @@ const express=require('express')
 const eduRecord = require('../models/education_record')
 const router= new express.Router()
 
-router.post('/educationrecord', async (req,res)=>{            //education record  creation endpoint  
+router.post('/educationrecords', async (req,res)=>{            //education record  creation endpoint  
   
 
     const eduRec=new eduRecord(req.body)
