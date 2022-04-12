@@ -22,7 +22,7 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
     const rec_id=req.params.id
      try{
           const eduRec=await eduRecord.findByIdAndDelete(rec_id)
-          //console.log(eduRec)
+          console.log(eduRec)
            if(!eduRec)    // if user is not in db
            {
                return res.status(404).send("user not found")
@@ -34,22 +34,23 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
          res.status(500).send(e)
      }
  })
- /*
- router.get('/educationrecords/:id',async(req,res)=>{          //edurec find endpoint 
+ 
+ router.get('/education_records/:id',async(req,res)=>{          //edurec find endpoint 
     const rec_id=req.params.id
      try{
-          const eduRec=await eduRecord.findOne(rec_id)
+         console.log("here")
+          const eduRec=await eduRecord.findById(rec_id)
           console.log(eduRec)
            if(!eduRec)    // if user is not in db
            {
                return res.status(404).send("user not found")
            }
-         res.send(edurec)
+         res.send(eduRec)
      }
      catch(e)
      {
          res.status(500).send(e)
      }
  })
-*/
+
 module.exports=router
