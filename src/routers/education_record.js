@@ -1,6 +1,7 @@
 const express=require('express')
 const eduRecord = require('../models/education_record')
 const router= new express.Router()
+const auth=require('../middleware/auth')
 
 router.post('/educationrecords', async (req,res)=>{            //education record  creation endpoint  
   
@@ -22,20 +23,35 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
     const rec_id=req.params.id
      try{
           const eduRec=await eduRecord.findByIdAndDelete(rec_id)
-          console.log(eduRec)
+          //console.log(eduRec)
            if(!eduRec)    // if user is not in db
            {
-               return res.status(404).send("user not found")
+            const errorMessage={
+                "code":404,
+                "status":"failed",
+                "message":"Record not available"
+            }
+               return res.status(404).send(errorMessage)
            }
-         res.send("Deleted")
+           const responseMessage={
+               "code":200,
+               "status":"success",
+               "message":"Record successful deleted"
+           }
+         res.send(responseMessage)
      }
      catch(e)
      {
-         res.status(500).send(e)
+        const errorMessage={
+            "code":500,
+            "status":"failed",
+            "message":e
+        }
+         res.status(500).send(errorMessage)
      }
  })
  
- router.get('/education_records/:id',async(req,res)=>{          //edurec find endpoint 
+ router.get('/education_records/:id',auth,async(req,res)=>{          //edurec find endpoint 
     const rec_id=req.params.id
      try{
          console.log("here")
