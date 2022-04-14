@@ -11,11 +11,27 @@ router.post('/educationrecords', async (req,res)=>{            //education recor
     try
         {
          await eduRec.save()
-         res.status(201).send("success")
+         const responseMessage={
+            "code": "200",
+            "message": " Success"
+
+         }
+         res.status(201).send(responseMessage)
         }
     catch (error)
     {
-        res.status(400).send(error)
+        var err="error generated"
+        if(error.keyValue)
+        {
+            err="email already exist"
+        }
+        const errorResponse={
+            "error_code":400,
+            "status":"fail",
+            "error_massage":err
+        }
+        res.status(400).send(errorResponse)
+       // res.status(400).send(error)
     }
 })
 
