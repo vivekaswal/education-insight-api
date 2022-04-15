@@ -72,7 +72,7 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
      try{
          console.log("here")
           const eduRec=await eduRecord.findById(rec_id)
-          console.log(eduRec)
+        //  console.log(eduRec)
            if(!eduRec)    // if user is not in db
            {
                return res.status(404).send("user not found")
@@ -84,5 +84,23 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
          res.status(500).send(e)
      }
  })
+ router.get('/education_records',auth,async(req,res)=>{          //edurec find endpoint 
+   
+     try{
+         console.log("here")
+          const eduRec=await eduRecord.find({})
+        //  console.log(eduRec)
+           if(!eduRec)    // if user is not in db
+           {
+               return res.status(404).send("No record found")
+           }
+         res.send(eduRec)
+     }
+     catch(e)
+     {
+         res.status(500).send(e)
+     }
+ })
+
 
 module.exports=router
