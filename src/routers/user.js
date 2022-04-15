@@ -1,6 +1,7 @@
 const express=require('express')
 const User=require('../models/users')
 const router= new express.Router()
+const auth=require('../middleware/auth')
 
 router.post('/users', async (req,res)=>{            //user creation endpoint  
   
@@ -63,6 +64,21 @@ router.delete('/users/:id',async(req,res)=>{          //user deletion endpoint
     catch(e)
     {
         res.status(500).send(e)
+    }
+})
+
+router.post('/signin', async (req, res) => {       //user signin
+    try {
+    
+    //    console.log("user login")
+      
+        const user = await User.findByCredentials(req.body.email, req.body.password)
+        //console.log(user)
+        const token=await user.generateAuthToken()
+        res.send({user,token})
+    } catch (e) {
+        console.log(e)
+        res.status(400).send(e)
     }
 })
 

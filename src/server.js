@@ -7,7 +7,7 @@ const userRouter=require('./routers/user')
 const app=express()
 app.use(express.json()) // convert request body to json 
 
-const port=process.env.PORT
+const port=process.env.PORT || 3000
 
 app.use(userRouter)
 app.use(eduRouter)
