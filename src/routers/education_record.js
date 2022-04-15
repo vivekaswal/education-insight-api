@@ -84,7 +84,7 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
          res.status(500).send(e)
      }
  })
- router.get('/education_records',auth,async(req,res)=>{          //edurec find endpoint 
+ router.get('/education_records',auth,async(req,res)=>{          //edurec all endpoint 
    
      try{
          console.log("here")
