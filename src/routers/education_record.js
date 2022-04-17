@@ -3,7 +3,7 @@ const eduRecord = require('../models/education_record')
 const router= new express.Router()
 const auth=require('../middleware/auth')
 
-router.post('/educationrecords', async (req,res)=>{            //education record  creation endpoint  
+router.post('/educationrecords', async (req,res)=>{            //education record  creation
   
 
     const eduRec=new eduRecord(req.body)
