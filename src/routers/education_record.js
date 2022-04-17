@@ -84,6 +84,40 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
          res.status(500).send(e)
      }
  })
+ router.put('/educationrecords/:id',async(req,res)=>{           //update endpoint user
+    
+    const updates=Object.keys(req.body)
+    const allowUpdates=['name','email','state_id','city_id','higherstudy_id','passing_year','dob','createdate']
+    const isValidOperation= updates.every((update)=>{
+          return allowUpdates.includes(update)
+    })
+    if(!isValidOperation)
+    {
+          return res.status(400).send({
+              error: 'Invlaid update'
+          })
+    }
+   
+    try{
+    
+        const eduRec=await eduRecord.findById(req.params.id)
+       
+        
+        updates.forEach((update)=>{
+          
+            eduRec[update]=req.body[update]
+        })
+       
+        await eduRec.save()
+        //const user= await User.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true})
+       
+        res.send(eduRec)
+       }
+catch(e)
+{
+     res.status(400).send(e)
+}
+})
  router.get('/educationrecords',auth,async(req,res)=>{          //edurec all endpoint 
    
      try{
