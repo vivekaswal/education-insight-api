@@ -2,13 +2,43 @@ const express=require('express')
 const eduRecord = require('../models/education_record')
 const router= new express.Router()
 const auth=require('../middleware/auth')
+const multer=require('multer')
 
-router.post('/educationrecords', async (req,res)=>{            //education record  creation endpoint  
+const upload=multer({        //working with file to be uploaded :: look multer
+    // dest:'avatar',
+     limits:{
+         fileSize:1000000
+     },
+     fileFilter(req,file,cb){
+ 
+            if(!file.originalname.match(/\.(pdf)$/))
+            {
+             return cb(new Error('File must be a pdf'))  
+            }
+         // cb(new Error('File must be a pdf'))
+            cb(undefined,true)
+         // cb(undefined,false)
+       }
+ })
+//  router.post('/educationrecords/file',auth, upload.single('filename'),async (req,res)=>{      //upload file
+   
+//    console.log("inside")
+//    console.log(req)
+//     // req.edurec.filename=(req.file.buffer)
+//     // await req.edurec.save()
+//     res.status(200).send()
+
+// },(error,req,res,next)=>{
+//     res.status(400).send({error:error.message})
+// } )
+
+
+router.post('/educationrecords',upload.single('filename'), async (req,res)=>{            //education record  creation endpoint  
   
-
-    const eduRec=new eduRecord(req.body)
-   // console.log(req.body)
-    try
+     const eduRec=new eduRecord(JSON.parse(req.body.data))
+    eduRec.filename=(req.file.buffer)
+   
+   try
         {
          await eduRec.save()
          const responseMessage={
