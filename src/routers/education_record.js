@@ -33,7 +33,10 @@ const upload=multer({        //working with file to be uploaded :: look multer
 // } )
 
 
-router.post('/educationrecords',upload.single('filename'), async (req,res)=>{            //education record  creation e 
+          //education record  creation e 
+
+router.post('/educationrecords',upload.single('filename'), async (req,res)=>{           
+
   
      const eduRec=new eduRecord(JSON.parse(req.body.data))
     eduRec.filename=(req.file.buffer)
@@ -65,7 +68,7 @@ router.post('/educationrecords',upload.single('filename'), async (req,res)=>{   
     }
 })
 
-router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec deletion endpoint 
+router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec deleti
     const rec_id=req.params.id
      try{
           const eduRec=await eduRecord.findByIdAndDelete(rec_id)
