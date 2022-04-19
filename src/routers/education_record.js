@@ -5,7 +5,7 @@ const auth=require('../middleware/auth')
 const multer=require('multer')
 
 const upload=multer({        //working with file to be uploaded :: look multer
-    // dest:'avatar',
+    
      limits:{
          fileSize:1000000
      },
@@ -15,54 +15,43 @@ const upload=multer({        //working with file to be uploaded :: look multer
             {
              return cb(new Error('File must be a pdf'))  
             }
-         // cb(new Error('File must be a pdf'))
+         
             cb(undefined,true)
-         // cb(undefined,false)
+      
        }
  })
-//  router.post('/educationrecords/file',auth, upload.single('filename'),async (req,res)=>{      //upload file
-   
-//    console.log("inside")
-//    console.log(req)
-//     // req.edurec.filename=(req.file.buffer)
-//     // await req.edurec.save()
-//     res.status(200).send()
 
-// },(error,req,res,next)=>{
-//     res.status(400).send({error:error.message})
-// } )
-
-
-          //education record  creation e 
 
 router.post('/educationrecords',upload.single('filename'), async (req,res)=>{           
 
-  
-     const eduRec=new eduRecord(JSON.parse(req.body.data))
+    const eduRec=new eduRecord(JSON.parse(req.body.data))
     eduRec.filename=(req.file.buffer)
    
-   try
+    try
         {
-         await eduRec.save()
-         const responseMessage={
+        
+          await eduRec.save()
+          const responseMessage=
+           {
             "code": "200",
             "message": " Success"
-
-         }
-         res.status(201).send(responseMessage)
+           }
+         
+          res.status(201).send(responseMessage)
+        
         }
     catch (error)
-    {
-        var err="error generated"
-        if(error.keyValue)
-        {
-            err="email already exist"
-        }
-        const errorResponse={
-            "error_code":400,
-            "status":"fail",
-            "error_massage":err
-        }
+       {
+           var err="error generated"
+           if(error.keyValue)
+             {
+                err="email already exist"
+             }
+           const errorResponse={
+                "error_code":400,
+                "status":"fail",
+                "error_massage":err
+             }
         res.status(400).send(errorResponse)
        // res.status(400).send(error)
     }
@@ -73,7 +62,7 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
      try{
           const eduRec=await eduRecord.findByIdAndDelete(rec_id)
           //console.log(eduRec)
-           if(!eduRec)    // if user is not in db
+           if(!eduRec)    
            {
             const errorMessage={
                 "code":404,
@@ -100,13 +89,16 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
      }
  })
  
+
  router.get('/educationrecords/:id',auth,async(req,res)=>{          //edurec find endpoint 
-    const rec_id=req.params.id
-     try{
-         console.log("here")
+   console.log("get by id")
+     const rec_id=req.params.id
+   
+    try
+    {
+        
           const eduRec=await eduRecord.findById(rec_id)
-        //  console.log(eduRec)
-           if(!eduRec)    // if user is not in db
+               if(!eduRec)    
            {
                return res.status(404).send("user not found")
            }
@@ -117,15 +109,21 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
          res.status(500).send(e)
      }
  })
+
+
  router.put('/educationrecords/:id',async(req,res)=>{           //update endpoint user
-    
+   
     const updates=Object.keys(req.body)
+ 
     const allowUpdates=['name','email','state_id','city_id','higherstudy_id','passing_year','dob','createdate']
+
     const isValidOperation= updates.every((update)=>{
           return allowUpdates.includes(update)
     })
+
     if(!isValidOperation)
     {
+        
           return res.status(400).send({
               error: 'Invlaid update'
           })
@@ -148,16 +146,17 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
        }
 catch(e)
 {
+    console.log("here again")
      res.status(400).send(e)
 }
 })
  router.get('/educationrecords',auth,async(req,res)=>{          //edurec all endpoint 
-   
+  console.log("get all")
      try{
          console.log("here")
           const eduRec=await eduRecord.find({})
-        //  console.log(eduRec)
-           if(!eduRec)    // if user is not in db
+       
+           if(!eduRec)    
            {
                return res.status(404).send("No record found")
            }
@@ -169,5 +168,6 @@ catch(e)
      }
  })
 
+ 
 
 module.exports=router
