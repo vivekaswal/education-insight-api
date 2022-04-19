@@ -34,6 +34,9 @@ const eduRecord= mongoose.model('education_record',{        //education record s
     createddate: {
         type: Date,
         default: Date.now,
+    },
+    filename:{
+        type:Buffer
     }
 })
 
