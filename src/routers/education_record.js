@@ -33,6 +33,7 @@ const upload=multer({        //working with file to be uploaded :: look multer
 // } )
 
 
+
 router.post('/educationrecords',upload.single('filename'), async (req,res)=>{            //education record  creation endpoint  
   
      const eduRec=new eduRecord(JSON.parse(req.body.data))
