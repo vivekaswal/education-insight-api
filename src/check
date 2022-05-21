@@ -1,0 +1,35 @@
+  //await eduRecord.aggregate([ 
+//   {
+        //   $lookup: {
+        //     from: "state_infos",
+        //     localField: "state_id",
+        //     foreignField: "state_id",
+        //     as: "_info",
+        //   },
+        // },
+        // {
+        //   $unwind: "$_info",
+        // },
+        
+    //         {
+    //           $lookup: {
+    //             from: "state_infos",
+    //             localField: "state_id",
+    //             foreignField: "state_id",
+    //                 $match: {
+    //                     state_name: { $regex: req_term}
+    //                 },
+                  
+    //             as: "orders_info",
+    //           },
+    //         },
+    //         {
+    //           $unwind: "$orders_info",
+    //         },
+          
+    //   ]).then((result) => {
+    //    check=result;
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
