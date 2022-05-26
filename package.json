@@ -5,14 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server.js",
-<<<<<<< HEAD
     "dev": "env-cmd -f ./config/dev.env nodemon src/server.js",
     "test":  "env-cmd -f ./config/test.env jest --watch --runInBand ",
     "coverage":"jest --collect-coverage"
-=======
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "env-cmd -f ./config/dev.env nodemon src/server.js"
->>>>>>> e465b006fcaff8a5380a8d6e015cfeafc8958f01
   },
   "jest":{
     "testEnvironment":"node"
