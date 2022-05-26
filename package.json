@@ -5,8 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "env-cmd -f ./config/dev.env nodemon src/server.js"
+    "dev": "env-cmd -f ./config/dev.env nodemon src/server.js",
+    "test":  "env-cmd -f ./config/test.env jest --watch --runInBand ",
+    "coverage":"jest --collect-coverage"
   },
+  "jest":{
+    "testEnvironment":"node"
+   },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -21,6 +26,8 @@
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
-    "nodemon": "^2.0.15"
+    "jest": "^28.0.0",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
   }
 }

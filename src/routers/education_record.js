@@ -3,6 +3,8 @@ const eduRecord = require('../models/education_record')
 const router= new express.Router()
 const auth=require('../middleware/auth')
 const multer=require('multer')
+const state_info=require('../models/stateInfo')
+
 
 const upload=multer({        //working with file to be uploaded :: look multer
     
@@ -90,9 +92,10 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
  })
  
 
- router.get('/educationrecords/:id',auth,async(req,res)=>{          //edurec find endpoint 
-   console.log("get by id")
+ router.get('/educationrecords/:id',async(req,res)=>{          //edurec find endpoint 
+  
      const rec_id=req.params.id
+
    
     try
     {
@@ -109,6 +112,8 @@ router.delete('/educationrecords/:id',async(req,res)=>{          //edu rec delet
          res.status(500).send(e)
      }
  })
+
+
 
 
  router.put('/educationrecords/:id',async(req,res)=>{           //update endpoint user
@@ -152,8 +157,10 @@ catch(e)
 })
  router.get('/educationrecords',auth,async(req,res)=>{          //edurec all endpoint 
   console.log("get all")
+
      try{
          console.log("here")
+         
           const eduRec=await eduRecord.find({})
        
            if(!eduRec)    
@@ -168,6 +175,78 @@ catch(e)
      }
  })
 
+ router.get('/educationrecords/search/:term',async(req,res)=>{          //edurec find endpoint 
+    
+    const req_term=req.params.term
+
+  // console.log(req_term)
+   try
+   {
+          
+    eduRecord.aggregate([
+        {
+          $lookup: {
+            from: "state_infos",
+            localField: "state_id",
+            foreignField: "state_id",
+            as: "_info",
+          },
+        },
+        {
+          $unwind: "$_info",
+        },
+        {$match: 
+            {$or:[
+            { "_info.state_name":{ $regex: req_term, $options: 'g' }
+            },
+            { "email":{$regex: req_term, $options: 'g'}}
+        ]   
+        }
+          },
+        
+      ])
+        .then((result) => {
+          res.send(result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+       let check
+//        const regex=new RegExp(req_term,'i')
+//        const data=await eduRecord.find({ $or: 
+//        [
+//        { 
+//            email: { '$regex': req_term, '$options': 'i' },}
+//        ]})
+//    //   console.log(data)
+//        res.send(data)
+    }
+    catch(e)
+    {
+        res.status(500).send(e)
+    }
+})
+
+router.get('/educationrecords/file/:id',async (req,res)=>{      //get file
+   
+    try{
+        const rec=await eduRecord.findById(req.params.id)
+
+        if(!rec || !rec.filename)
+        {
+            throw new Error()
+        }
+         
+        res.set('Content-Type','application/pdf') // what kind of data we are sending back
+        res.send(rec.filename)
+    }
+    catch(e)
+    {
+        res.status(404).send()
+    }
+   
+})
  
 
 module.exports=router
